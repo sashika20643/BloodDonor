@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+         'address',
+         'role'
     ];
 
     /**
@@ -33,6 +36,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
+
     /**
      * The attributes that should be cast.
      *
@@ -42,4 +47,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function donor()
+    {
+        return $this->hasOne(Donor::class);
+    }
+
+    public function hospital()
+    {
+        return $this->hasOne(Hospital::class);
+    }
+
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
+
+    public function bloodBank()
+    {
+        return $this->hasOne(BloodBank::class);
+    }
+
+
+
 }
