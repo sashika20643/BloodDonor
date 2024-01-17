@@ -14,10 +14,11 @@ class BloodDonationCampNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
-    {
-        //
-    }
+     protected $bloodDonationCamp;
+     public function __construct($bloodDonationCamp)
+     {
+         $this->bloodDonationCamp = $bloodDonationCamp;
+     }
 
     /**
      * Get the notification's delivery channels.
@@ -34,14 +35,18 @@ class BloodDonationCampNotification extends Notification
      */
  public function toMail($notifiable)
     {
+        $bloodDonationCamp = $this->bloodDonationCamp;
+
         return (new MailMessage)
-            ->subject('Blood Donation Camp Added')
-            ->line('A new blood donation camp has been added:')
-            ->line('Organisation Name: ' . $notifiable->organisation_name)
-            ->line('Address: ' . $notifiable->address)
-            // Add more lines with other details as needed
-            ->action('View Blood Donation Camp', url('/blood_donation_camps/' . $notifiable->id))
-            ->line('Thank you for using our application!');
+        ->subject('Blood Donation Camp Notification')
+        ->line("Dear {$notifiable->name},")
+        ->line("A new blood donation camp is scheduled:")
+        ->line("Organization Name: {$bloodDonationCamp->organisation_name}")
+        ->line("Location: {$bloodDonationCamp->target_location}")
+        ->line("Start Date: {$bloodDonationCamp->start_date}")
+        ->line("End Date: {$bloodDonationCamp->end_date}")
+        ->action('View Blood Donation Camp Details', route('blood_donation_camps.show', $bloodDonationCamp->id))
+        ->line('Thank you for your support!');
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BloodCamp;
+use App\Models\Donor;
+
 use App\Models\Doctor;
 use App\Notifications\BloodDonationCampNotification;
 use App\Notifications\NextBloodCampNotification;
@@ -14,7 +16,7 @@ class BloodDonationCampController extends Controller
 {
 
 
-    
+
 public function index()
 {
     $bloodDonationCamps = BloodCamp::all();
@@ -70,13 +72,13 @@ public function index()
             'doctor_id' => $request->input('doctor_id'),
         ]);
 
-        $doctor = $bloodDonationCamp->doctor; 
+        $doctor = $bloodDonationCamp->doctor;
         $doctor->user->notify(new BloodDonationCampNotification($bloodDonationCamp));
         $donors = Donor::all(); // Adjust this based on your actual query for donors
         foreach ($donors as $donor) {
-            $donor->user->notify(new NextBloodCampNotification($donor));
+            $donor->user->notify(new NextBloodCampNotification($bloodDonationCamp));
         }
-    
+
 
         return redirect()->route('blood_donation_camps.index')->with('success', 'Blood Donation Camp created successfully');
     }
@@ -87,10 +89,10 @@ public function index()
     {
         $bloodDonationCamp = BloodCamp::findOrFail($id);
         $doctors = Doctor::all();
-        return view('Blood_bank.edit', compact('bloodDonationCamp','doctors'));
+        return view('Dashboard.Blood_bank.edit', compact('bloodDonationCamp','doctors'));
     }
 
-  
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -124,5 +126,18 @@ public function index()
 
         return redirect()->route('blood_donation_camps.index')->with('success', 'Blood donation camp deleted successfully');
     }
+
+
+    public function show($id)
+{
+    $bloodCamp = BloodCamp::findOrFail($id);
+    return view('Bloodcamp', compact('bloodCamp'));
+}
+
+public function showDonors($id)
+{
+    $bloodCamp = BloodCamp::find($id);
+    return view('Dashboard.Blood_bank.showDonors', compact('bloodCamp'));
+}
 }
 

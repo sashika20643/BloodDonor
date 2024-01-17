@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Donor;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -68,7 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'address'=> $data['address'],
@@ -76,5 +78,15 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
 
         ]);
+
+        if ($data['is_donor']) {
+            Donor::updateOrCreate(
+                ['user_id' =>$user->id,
+                'blood_group'=>$data['blood_group'],
+                'donation_rate'=>$data['donation_rate'],
+                ]
+            );
+        }
+        return $user;
     }
 }

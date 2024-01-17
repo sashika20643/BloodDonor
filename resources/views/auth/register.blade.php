@@ -88,7 +88,33 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="blood_group" class="col-md-4 col-form-label text-md-end">{{ __('Blood Group') }}</label>
 
+                        <div class="col-md-6">
+                            <select class="form-control @error('blood_group') is-invalid @enderror" id="blood_group" name="blood_group" required>
+                                <option value="" disabled selected>Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                            @error('blood_group')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
+                        </div>
+                        <div class="mb-3 hidden" style="display:none" >
+                            <label for="donation_rate" class="form-label">{{ __('Donation Rate') }}</label>
+                            <input type="text" class="form-control" id="donation_rate" name="donation_rate" value="Basic">
+                        </div>
+<input type="text" hidden name="is_donor" value="true">
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

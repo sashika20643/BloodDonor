@@ -30,4 +30,9 @@ class Doctor extends Model
         {
             return $this->hasMany(BloodDonationCamp::class);
         }
+
+        public function blood_camp_requests()
+{
+    return $this->hasManyThrough(Blood_camp_requests::class, BloodCamp::class, 'doctor_id', 'blood_camp_id', 'id', 'id');
+}
 }

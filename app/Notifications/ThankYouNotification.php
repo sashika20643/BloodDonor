@@ -7,19 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NextBloodCampNotification extends Notification
+class ThankYouNotification extends Notification
 {
     use Queueable;
-    protected $bloodDonationCamp;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($bloodDonationCamp)
+    public function __construct()
     {
-        $this->bloodDonationCamp = $bloodDonationCamp;
+        //
     }
-
 
     /**
      * Get the notification's delivery channels.
@@ -28,7 +26,6 @@ class NextBloodCampNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-
         return ['mail'];
     }
 
@@ -37,18 +34,15 @@ class NextBloodCampNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $bloodDonationCamp = $this->bloodDonationCamp;
-
         return (new MailMessage)
-        ->subject('Upcoming Blood Donation Camp Notification')
+        ->subject('Thank You for Your Blood Donation')
         ->line("Dear {$notifiable->name},")
-        ->line("Our next blood donation camp is approaching:")
-        ->line("Organization Name: {$bloodDonationCamp->organisation_name}")
-        ->line("Location: {$bloodDonationCamp->target_location}")
-        ->line("Start Date: {$bloodDonationCamp->start_date}")
-        ->line("End Date: {$bloodDonationCamp->end_date}")
-        ->action('View Blood Donation Camp Details', route('blood_donation_camps.show', $bloodDonationCamp->id))
-        ->line('Thank you for your continued support!');
+        ->line('Thank you for your recent blood donation. Your contribution is valuable and helps save lives.')
+        ->line('We appreciate your commitment to making a positive impact on the community.')
+        ->line('If you have any questions or need further information, feel free to contact us.')
+        ->line('Thank you once again for your generosity!')
+        ->line('Best regards,')
+        ->line('Blood Donation Center');
     }
 
     /**

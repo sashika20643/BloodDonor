@@ -18,7 +18,6 @@ class AdminController extends Controller
 
 public function store(Request $request)
 {
-    // Validate the form data
     $request->validate([
         'name' => 'required',
         'email' => 'required|email|unique:users',
@@ -28,10 +27,9 @@ public function store(Request $request)
         'address' => 'required',
         'category' => 'required_if:role,Hospital|in:Private,Government,Ayurved',
         'hospital_id' => 'required_if:role,Doctor|exists:hospitals,id',
-        // Add more validation rules as needed
     ]);
 
-    // Create a new user with common details
+
     $user = User::create([
         'name' => $request->input('name'),
         'email' => $request->input('email'),
@@ -68,6 +66,6 @@ public function store(Request $request)
     }
 
     // Redirect back with a success message
-    return redirect()->route('admin.users.index')->with('success', 'User added successfully');
+    return redirect()->back()->with('success', 'User added successfully');
 }
 }

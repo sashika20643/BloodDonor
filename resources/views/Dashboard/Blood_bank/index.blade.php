@@ -9,9 +9,12 @@
         @foreach($bloodDonationCamps as $camp)
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $camp->organisation_name }}</h5>
+                    <h5 class="card-title">{{ $camp->organisation_name }}(<span style='color:{{$camp->status=="Pending" ? "orange":"green"  }}'> {{$camp->status}} </span>)</h5>
+
                     <p class="card-text">{{ $camp->target_location }}, {{ $camp->start_date }} to {{ $camp->end_date }}</p>
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#campDetails{{ $camp->id }}">Show Details</button>
+                    <a href="{{ route('blood_donation_camps.showDonors', ['id' => $camp->id]) }}" class="btn btn-info">Show Donors</a>
+
                 </div>
                  <div id="campDetails{{ $camp->id }}" class="collapse">
                     <div class="card-body">

@@ -30,4 +30,9 @@ class BloodCamp extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+    public function bloodCampDonors(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BloodCampDonor::class, 'bloodCamp_id', 'id');
+
+    }
 }

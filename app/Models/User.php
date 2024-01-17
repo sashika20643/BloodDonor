@@ -54,6 +54,7 @@ class User extends Authenticatable
         return $this->hasOne(Donor::class);
     }
 
+
     public function hospital()
     {
         return $this->hasOne(Hospital::class);

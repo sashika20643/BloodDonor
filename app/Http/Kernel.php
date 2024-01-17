@@ -54,6 +54,12 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'is_blood_bank' => \App\Http\Middleware\BloodBankMiddleware::class,
+        'is_Doctor' => \App\Http\Middleware\DoctorMiddleware::class,
+        'is_Donor' => \App\Http\Middleware\DonorMiddleware::class,
+        'is_Admin' => \App\Http\Middleware\AdminMiddleware::class,
+
+
+
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
